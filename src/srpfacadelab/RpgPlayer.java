@@ -45,6 +45,9 @@ public class RpgPlayer {
         if (item.isUnique() && checkIfItemExistsInInventory(item))
             return false;
 
+        if (item.isRare() && item.isUnique())
+            gameEngine.playSpecialEffect("blue_swirly");
+
         // Don't pick up items that give health, just consume them.
         if (item.getHeal() > 0) {
             health += item.getHeal();
@@ -95,8 +98,10 @@ public class RpgPlayer {
         if (damage < armour) {
             gameEngine.playSpecialEffect("parry");
         }
-
         int damageToDeal = damage - armour;
+        if(calculateInventoryWeight() / carryingCapacity < .5)
+            damageToDeal *= .75;
+
         health -= damageToDeal;
 
         gameEngine.playSpecialEffect("lots_of_gore");
