@@ -1,5 +1,7 @@
 package srpfacadelab;
 
+import java.util.List;
+
 public class Item {
 
     private int id;
@@ -30,6 +32,49 @@ public class Item {
         this.setWeight(weight);
         this.setUnique(unique);
         this.setId(id);
+    }
+
+    public void useItem(SimpleGameEngine sg, RpgPlayer player) {
+        if (getName().equals("Stink Bomb"))
+        {
+            List<IEnemy> enemies = sg.getEnemiesNear(player);
+
+            for (IEnemy enemy: enemies){
+                enemy.takeDamage(100);
+            }
+        }
+    }
+
+    public boolean pickUpItem(RpgPlayer player, SimpleGameEngine sg) {
+        if (player.calculateInventoryWeight() + getWeight() > player.getCarryingCapacity())
+            return false;
+
+        if (unique && player.checkIfItemExistsInInventory(this))
+            return false;
+
+        if (rare && unique)
+            sg.playSpecialEffect("blue_swirly");
+
+        // Don't pick up items that give health, just consume them.
+        if (heal > 0) {
+            player.setHealth(player.getHealth() + heal);
+
+            if (player.getHealth() > player.getMaxHealth())
+                player.setHealth(player.getMaxHealth());
+
+            if (heal > 500) {
+                sg.playSpecialEffect("green_swirly");
+            }
+
+            return true;
+        }
+
+        if (rare)
+            sg.playSpecialEffect("cool_swirly_particles");
+
+        player.addToInventory(this);
+
+        return true;
     }
 
     public int getId() {
