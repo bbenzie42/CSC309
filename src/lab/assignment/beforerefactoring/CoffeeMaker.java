@@ -2,7 +2,8 @@ package lab.assignment.beforerefactoring;
 
 public class CoffeeMaker {
 
-    public void prepareMochaCoffee(){
+    public void prepareMochaCoffee()
+    {
         boilWater();
         brewEspresso();
         addIngredientsForMocha();
@@ -10,11 +11,21 @@ public class CoffeeMaker {
         System.out.println(">>Serving coffee");
     }
 
-    public void prepareCapuccinoCoffee(){
+    public void prepareCapuccinoCoffee()
+    {
         boilWater();
         brewEspresso();
         addIngredientsForCapuccino();
         finalTouchForCapuccino();
+        System.out.println(">>Serving coffee");
+    }
+
+    public void prepareAmericanoCoffee()
+    {
+        boilWater();
+        brewEspresso();
+        addIngredientsForAmericano();
+        finalTouchForAmericano();
         System.out.println(">>Serving coffee");
     }
 
@@ -36,12 +47,20 @@ public class CoffeeMaker {
         System.out.println("Add cinnamon");
     }
 
+    private void addIngredientsForAmericano(){
+        System.out.println("Add more hot water");
+    }
+
     private void finalTouchForMocha(){
         System.out.println("Adding sugar");
     }
 
     private void finalTouchForCapuccino(){
         System.out.println("Top with milk foam");
+    }
+
+    private void finalTouchForAmericano(){
+        System.out.println("Add sugar and cream");
     }
 
 
